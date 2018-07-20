@@ -75,7 +75,7 @@ class Registration
     $query = "INSERT INTO konta VALUES ('NULL',$fieldsVals)";
     if($this->dbo->query($query))
     {
-        /*$query1 = "INSERT INTO kategorie_wydatki_uzytkownika(nazwaKategorii) SELECT kategorie_wydatki_domyslne.nazwaKategorii FROM kategorie_wydatki_domyslne";
+        $query1 = "INSERT INTO kategorie_wydatki_uzytkownika(nazwaKategorii) SELECT kategorie_wydatki_domyslne.nazwaKategorii FROM kategorie_wydatki_domyslne";/*
         $query2 = "INSERT INTO kategorie_przychody_uzytkownika(nazwaKategorii) SELECT kategorie_przychody_domyslne.nazwaKategorii FROM kategorie_przychody_domyslne";
         if($this->dbo->query($query1) && this->dbo->query($query2)){
             $query="UPDATE kategorie_przychody_uzytkownika, kategorie_wydatki_uzytkownika SET idUzytkownika = '$iduzytkownika' WHERE idUzytkownika = '0'"
