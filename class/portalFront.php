@@ -114,7 +114,7 @@
             return $reg->registerUser();
         }
         function showMainMenu(){
-            if(isset($_SESSION['zalogowany'])){
+            if(isset($_SESSION['zalogowany'])){ss
                 $menu = new mainmenu();
                 return $menu->show();
             }    
