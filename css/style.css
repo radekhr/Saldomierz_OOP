@@ -1,0 +1,107 @@
+body{
+    background-image: url("../img/tlo.png");
+    margin:0;
+    padding:0;
+    height:100%;    
+    }
+h1{
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+    font-style: italic;
+    color: darkblue;
+    font-size: 60px;
+}
+
+.alert{
+    text-align: center;
+    font-size: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width:80%;
+}
+
+
+p{
+    font-size: 15px;
+    font-family:sans-serif;
+    color: darkblue;
+}
+
+.container {
+    min-height: 650px;
+}
+
+footer{
+    position: absolute; 
+    bottom:0;
+    height: 3em;
+    background-color:darkblue;  
+    width:100%;
+    padding:5px;
+}
+
+.footer p{
+    font-size:20px;
+    text-align: center;
+    color:white;
+}
+
+.jumbotron {
+padding:20px;
+    border: 2px solid black;
+    min-height:250px;
+}
+
+.buttons {
+      display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-danger {
+    margin-left:20px;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+label{
+    margin:5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.input-group label, .input-group input{
+    float: left;
+    vertical-align: middle;    
+}
+
+.forms {
+    height:250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-group {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.col-sm-12.text-center {
+    margin-top: 5px;
+}
+
+#loginFormWrapper {
+    margin-top:30px;
+}
