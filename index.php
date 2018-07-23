@@ -58,6 +58,15 @@
                     case FORM_DATA_MISSING:
                         $portal->setMessage('Proszę wypełnić wszystkie pola formularza!');
                     break;
+                    case INVALID_LOGIN:
+                        $portal->setMessage('Login musi zawierać od 5 do 20 znaków!');
+                    break;
+                    case INVALID_EMAIL:
+                        $portal->setMessage('Proszę wpisać poprawny adres email!');
+                    break;
+                    case INVALID_PASS:
+                        $portal->setMessage('Hasło musi posiadać conajmniej 5 znaków w tym jedną cyfrę!');
+                    break;
                     case PASSWORDS_DO_NOT_MATCH:
                         $portal->setMessage('Hasło musi być takie samo w obu polach!');
                     break;
@@ -74,7 +83,214 @@
             case 'mainMenu':
                 $portal->showMainMenu();
             break;
-                
+            case 'addIncome':
+                switch($portal->addIncome()){
+                    case ACTION_OK:
+                        $portal->setMessage('Przychód pomyślnie dodany');
+                    break;
+                    case FORM_DATA_MISSING:
+                        $portal->setMessage('Kwota nie może zawierać liter ani być pusta!');
+                    break;
+                    case ACTION_FAILED:
+                    case SERVER_ERROR:
+                    default:
+                        $portal->setMessage('Błąd serwera!');
+                }
+                header('Location:index.php?action=showAddIncomeForm');
+            break;
+            case 'addExpense':
+                switch($portal->addExpense()){
+                    case ACTION_OK:
+                        $portal->setMessage('Wydatek pomyślnie dodany');
+                    break;
+                    case FORM_DATA_MISSING:
+                        $portal->setMessage('Kwota nie może zawierać liter ani być pusta!');
+                    break;
+                    case ACTION_FAILED:
+                    case SERVER_ERROR:
+                    default:
+                        $portal->setMessage('Błąd serwera!');
+                }
+                header('Location:index.php?action=showAddExpenseForm');
+            break;
+            case 'userSettings':
+                $portal->showUserSettings();
+            break;
+            case 'changeLogin':
+                 switch($portal->changeLogin()){
+                    case ACTION_OK:
+                        $portal->setMessage('Login został pomyślnie zmieniony');
+                    break;
+                    case USER_NAME_ALREADY_EXISTS:
+                        $portal->setMessage('Login aktualnie jest zajęty');
+                    break;
+                     case FORM_DATA_MISSING:
+                        $portal->setMessage('Proszę wprowadzić login');
+                    break;
+                    case ACTION_FAILED:
+                    case SERVER_ERROR:
+                    default:
+                        $portal->setMessage('Błąd serwera!');
+                }
+                header('Location:index.php?action=showUserSettings');
+            break;  
+            case 'changePass':
+                 switch($portal->changePass()){
+                    case ACTION_OK:
+                        $portal->setMessage('Hasło zostało pomyślnie zmienione');
+                    break;
+                    case INVALID_PASS:
+                        $portal->setMessage('Hasło musi posiadać conajmniej 5 znaków w tym jedną cyfrę');
+                    break;
+                    case PASSWORDS_DO_NOT_MATCH:
+                        $portal->setMessage('Wpisane hasła są różne');
+                    break;
+                     case FORM_DATA_MISSING:
+                        $portal->setMessage('Proszę wprowadzić hasło');
+                    break;
+                    case ACTION_FAILED:
+                    case SERVER_ERROR:
+                    default:
+                        $portal->setMessage('Błąd serwera!');
+                }
+                header('Location:index.php?action=showUserSettings');
+            break;
+            case 'changeEmail':
+                 switch($portal->changeEmail()){
+                    case ACTION_OK:
+                        $portal->setMessage('Email został pomyślnie zmieniony');
+                    break;
+                    case INVALID_EMAIL:
+                        $portal->setMessage('Wprowadź poprawnie adres email');
+                    break;
+                    case EMAIL_IN_DATABASE:
+                        $portal->setMessage('Wprowadzony email jest już w bazie');
+                    break;
+                    case ACTION_FAILED:
+                    case SERVER_ERROR:
+                    default:
+                        $portal->setMessage('Błąd serwera!');
+                }
+                header('Location:index.php?action=showUserSettings');
+            break;
+            case 'options':
+                $portal->showOptions();
+            break;
+            case 'addCatIncome':
+                 switch($portal->addCatIncome()){
+                    case ACTION_OK:
+                        $portal->setMessage('Kategoria przychodu została pomyślnie dodana');
+                    break;
+                    case CAT_ALREADY_EXISTS:
+                        $portal->setMessage('Taka kategoria już istnieje w bazie');
+                    break;
+                     case FORM_DATA_MISSING:
+                        $portal->setMessage('Proszę wprowadzić kategorię (bez cyfr)');
+                    break;
+                    case ACTION_FAILED:
+                    case SERVER_ERROR:
+                    default:
+                        $portal->setMessage('Błąd serwera!');
+                }
+                header('Location:index.php?action=showOptions');
+            break;   
+            case 'addCatExpense':
+                 switch($portal->addCatExpense()){
+                    case ACTION_OK:
+                        $portal->setMessage('Kategoria wydatku została pomyślnie dodana');
+                    break;
+                    case CAT_ALREADY_EXISTS:
+                        $portal->setMessage('Taka kategoria już istnieje w bazie');
+                    break;
+                     case FORM_DATA_MISSING:
+                        $portal->setMessage('Proszę wprowadzić kategorię (bez cyfr)');
+                    break;
+                    case ACTION_FAILED:
+                    case SERVER_ERROR:
+                    default:
+                        $portal->setMessage('Błąd serwera!');
+                }
+                header('Location:index.php?action=showOptions');
+            break;
+            case 'editCatIncome':
+                 switch($portal->editCatIncome()){
+                    case ACTION_OK:
+                        $portal->setMessage('Wybrana kategoria przychodu została zmieniona');
+                    break;
+                    case CAT_ALREADY_EXISTS:
+                        $portal->setMessage('Taka kategoria już istnieje w bazie');
+                    break;
+                     case FORM_DATA_MISSING:
+                        $portal->setMessage('Proszę wprowadzić kategorię (bez cyfr)');
+                    break;
+                    case ACTION_FAILED:
+                    case SERVER_ERROR:
+                    default:
+                        $portal->setMessage('Błąd serwera!');
+                }
+                header('Location:index.php?action=showOptions');
+            break;  
+            case 'editCatExpense':
+                 switch($portal->editCatExpense()){
+                    case ACTION_OK:
+                        $portal->setMessage('Wybrana kategoria wydatku została zmieniona');
+                    break;
+                    case CAT_ALREADY_EXISTS:
+                        $portal->setMessage('Taka kategoria już istnieje w bazie');
+                    break;
+                     case FORM_DATA_MISSING:
+                        $portal->setMessage('Proszę wprowadzić kategorię (bez cyfr)');
+                    break;
+                    case ACTION_FAILED:
+                    default:
+                        $portal->setMessage('Błąd serwera!');
+                }
+                header('Location:index.php?action=showOptions');
+            break;
+            case 'delCatIncome':
+                 switch($portal->delCatIncome()){
+                    case ACTION_OK:
+                        $portal->setMessage('Wybrana kategoria przychodu została usunięta');
+                    break;
+                    case ACTION_FAILED:
+                    default:
+                        $portal->setMessage('Błąd serwera!');
+                }
+                header('Location:index.php?action=showOptions');
+            break;                
+            case 'delCatExpense':
+                 switch($portal->delCatExpense()){
+                    case ACTION_OK:
+                        $portal->setMessage('Wybrana kategoria wydatku została usunięta');
+                    break;
+                    case ACTION_FAILED:
+                    default:
+                        $portal->setMessage('Błąd serwera!');
+                }
+                header('Location:index.php?action=showOptions');
+            break;
+            case 'delLastCatIncome':
+                 switch($portal->delLastCatIncome()){
+                    case ACTION_OK:
+                        $portal->setMessage('Ostatni wpis przychodu został usunięty');
+                    break;
+                    case ACTION_FAILED:
+                    default:
+                        $portal->setMessage('Błąd serwera!');
+                }
+                header('Location:index.php?action=showOptions');
+            break;                
+            case 'delLastCatExpense':
+                 switch($portal->delLastCatExpense()){
+                    case ACTION_OK:
+                        $portal->setMessage('Ostatni wpis wydatku został usunięty');
+                    break;
+                    case ACTION_FAILED:
+                    default:
+                        $portal->setMessage('Błąd serwera!');
+                }
+                header('Location:index.php?action=showOptions');
+            break;     
             default:
             include 'templates/mainTemplate.php';
         }

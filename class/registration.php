@@ -32,6 +32,19 @@ class Registration
     }
     //Tutaj lub po przefiltrowaniu dodatkowa weryfikacja danych,
     //w tym sprawdzenie długości ciągów, znaków niedozwolonych itp.
+    $login = $_POST['login'];
+    $pass = $_POST['haslo'];
+    $email = $_POST['email'];
+    if(strlen($login)<4 || strlen($login)>20){
+        return INVALID_LOGIN;
+    }
+    if(strlen($pass)<4 && !preg_match("#[0-9]+#", $pass)){
+        return INVALID_PASS;
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return INVALID_EMAIL;
+    }
+        
     //Odczyt i przefiltrowanie danych z formularza
         
     $fieldsFromForm = array();
@@ -75,15 +88,22 @@ class Registration
     $query = "INSERT INTO konta VALUES ('NULL',$fieldsVals)";
     if($this->dbo->query($query))
     {
-        $query1 = "INSERT INTO kategorie_wydatki_uzytkownika(nazwaKategorii) SELECT kategorie_wydatki_domyslne.nazwaKategorii FROM kategorie_wydatki_domyslne";/*
-        $query2 = "INSERT INTO kategorie_przychody_uzytkownika(nazwaKategorii) SELECT kategorie_przychody_domyslne.nazwaKategorii FROM kategorie_przychody_domyslne";
-        if($this->dbo->query($query1) && this->dbo->query($query2)){
-            $query="UPDATE kategorie_przychody_uzytkownika, kategorie_wydatki_uzytkownika SET idUzytkownika = '$iduzytkownika' WHERE idUzytkownika = '0'"
-            
-        }*/
-         return ACTION_OK;
+        $query = "SELECT iduzytkownika FROM konta where login='".$fieldsFromForm['login']."'";
+        $idUser = $this->dbo->query($query)->fetch_object()->iduzytkownika;       
+        $this->pullCategories($idUser);
+        
     }    
     else
         return ACTION_FAILED;
+    }
+    function pullCategories($idUser){
+        $query1 = "INSERT INTO kategorie_wydatki_uzytkownika(nazwaKategorii) SELECT kategorie_wydatki_domyslne.nazwaKategorii FROM kategorie_wydatki_domyslne";
+        $query2 = "INSERT INTO kategorie_przychody_uzytkownika(nazwaKategorii) SELECT kategorie_przychody_domyslne.nazwaKategorii FROM kategorie_przychody_domyslne";
+        if($this->dbo->query($query1) && $this->dbo->query($query2)){
+            $query1="UPDATE kategorie_przychody_uzytkownika SET idUzytkownika = '$idUser' WHERE idUzytkownika = '0'";
+            $query2="UPDATE kategorie_wydatki_uzytkownika SET idUzytkownika = '$idUser' WHERE idUzytkownika = '0'";
+            $this->dbo->query($query1);
+            $this->dbo->query($query2);
+        }
     }
 }

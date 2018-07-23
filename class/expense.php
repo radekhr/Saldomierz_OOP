@@ -1,5 +1,5 @@
 <?php
-class income
+class expense
 {
     private $dbo = null;
     private $fields = array();
@@ -9,72 +9,74 @@ class income
         $this->initFields();
     }
     function initFields(){
-        $this->fields['kwota'] = new FormIncomeInput('kwota', 'Kwota','text');
-        $this->fields['data'] = new FormIncomeInput('data', 'Data przychodu', 'date','','dataInput');
-        $this->fields['kom'] = new FormIncomeInput('kom', 'Komentarz','text'); 
+        $this->fields['kwota'] = new FormExpenseInput('kwota', 'Kwota','text');
+        $this->fields['data'] = new FormExpenseInput('data', 'Data wydatku', 'date','','dataInput');
+        $this->fields['kom'] = new FormExpenseInput('kom', 'Komentarz','text'); 
     }
-    function showAddIncomeForm(){
+    function showAddExpenseForm(){
         $formDataIncome = $this->fields;
-        include 'templates/addIncomeForm.php';
+        include 'templates/addExpenseForm.php';
     }   
-    function addIncome(){
-        if(empty($_POST['kwota'])||preg_match("/[a-z]/i", $_POST['kwota']))
+    function addExpense(){
+        if(empty($_POST['kwota'])||preg_match("/[a-z]/i", $_POST['kwota'])){
             return FORM_DATA_MISSING;
+        }
         $kwota = $_POST['kwota'];
         $data = $_POST['data'];
         $kom = $_POST['kom'];
-        $wyn = $_POST['wynagrodzenie'];
+        $kategoria = $_POST['kategoria'];
+        $sposobPlat = $_POST['sposobPlat'];
         $iduzytkownika = $_SESSION['zalogowany']->id;
         $kwota = str_replace(',','.',$kwota);
         $kwota = round($kwota, 2); 
-        $query = "INSERT INTO przychody VALUES(NULL,'$iduzytkownika','$data','$kwota','$wyn','$kom')";
+        $query = "INSERT INTO wydatki VALUES(NULL,'$data','$kwota','$kategoria','$sposobPlat','$kom','$iduzytkownika')";
         if($this->dbo->query($query)){
             return ACTION_OK;
         }else
             return ACTION_FAILED;          
     }
-    function addCatIncome(){    
+    function addCatExpense(){    
         if(empty($_POST['nowaKat'])||!(ctype_alpha($_POST['nowaKat'])))
             return FORM_DATA_MISSING;
         $nowaKat = $_POST['nowaKat'];
         $iduzytkownika = $_SESSION['zalogowany']->id; 
-        $query = "SELECT nazwaKategorii FROM kategorie_przychody_uzytkownika WHERE nazwaKategorii='$nowaKat' AND idUzytkownika = '$iduzytkownika'";
+        $query = "SELECT nazwaKategorii FROM kategorie_wydatki_uzytkownika WHERE nazwaKategorii='$nowaKat' AND idUzytkownika = '$iduzytkownika'";
         if($result = $this->dbo->query($query)){
             $rows = $result->num_rows;
             if($rows>0) return CAT_ALREADY_EXISTS;
         else{
-            $query="INSERT INTO kategorie_przychody_uzytkownika VALUES(NULL,'$iduzytkownika','$nowaKat')";
+            $query="INSERT INTO kategorie_wydatki_uzytkownika VALUES(NULL,'$iduzytkownika','$nowaKat')";
             if($this->dbo->query($query)) return ACTION_OK;
             else return ACTION_FAILED;  
             }       
         }
     }
-    function editCatIncome(){
+    function editCatExpense(){
         if(empty($_POST['edytKat'])||!(ctype_alpha($_POST['edytKat'])))
             return FORM_DATA_MISSING;
         $wybierzKat = $_POST['wybierzKat'];
         $edytKat = $_POST['edytKat'];
         $iduzytkownika = $_SESSION['zalogowany']->id;
-        $query = "SELECT nazwaKategorii FROM kategorie_przychody_uzytkownika WHERE nazwaKategorii='$edytKat' AND idUzytkownika = '$iduzytkownika'";
+        $query = "SELECT nazwaKategorii FROM kategorie_wydatki_uzytkownika WHERE nazwaKategorii='$edytKat' AND idUzytkownika = '$iduzytkownika'";
         if($result = $this->dbo->query($query)){
             $rows = $result->num_rows;
             if($rows>0) return CAT_ALREADY_EXISTS;
         else{
-            $query="UPDATE kategorie_przychody_uzytkownika SET nazwaKategorii='$edytKat' WHERE nazwaKategorii='$wybierzKat' AND idUzytkownika='$iduzytkownika'";
+            $query="UPDATE kategorie_wydatki_uzytkownika SET nazwaKategorii='$edytKat' WHERE nazwaKategorii='$wybierzKat' AND idUzytkownika='$iduzytkownika'";
             if($this->dbo->query($query)) return ACTION_OK;
             else return ACTION_FAILED;  
             }     
         }  
     }
-    function delCatIncome(){
+    function delCatExpense(){
         $usunKat = $_POST['usunKat'];
         $iduzytkownika = $_SESSION['zalogowany']->id;
-        $query = "DELETE FROM kategorie_przychody_uzytkownika WHERE nazwaKategorii='$usunKat' AND idUzytkownika = '$iduzytkownika'";
+        $query = "DELETE FROM kategorie_wydatki_uzytkownika WHERE nazwaKategorii='$usunKat' AND idUzytkownika = '$iduzytkownika'";
         if($result = $this->dbo->query($query)) return ACTION_OK; else return ACTION_FAILED;     
     }
-    function delLastCatIncome(){
+    function delLastCatExpense(){
         $iduzytkownika = $_SESSION['zalogowany']->id;
-        $query = "DELETE FROM przychody WHERE iduzytkownika = '$iduzytkownika' ORDER by idprzychod DESC LIMIT 1";
+        $query = "DELETE FROM wydatki WHERE iduzytkownika = '$iduzytkownika' ORDER by idwydatek DESC LIMIT 1";
         if($result = $this->dbo->query($query)) return ACTION_OK; else return ACTION_FAILED;
     }
 }

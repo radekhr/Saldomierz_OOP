@@ -9,4 +9,8 @@
     define('EMPTY_BASKET', 8);
     define('LOGIN_REQUIRED', 9);
     define('NO_LOGIN_REQUIRED', 10);
+    define('INVALID_LOGIN', 11);
+    define('INVALID_EMAIL', 12);
+    define('INVALID_PASS',13);
+    define('EMAIL_IN_DATABASE',14);
 ?>

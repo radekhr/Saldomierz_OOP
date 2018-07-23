@@ -47,9 +47,9 @@ footer{
 }
 
 .jumbotron {
-padding:20px;
+    padding:20px;
     border: 2px solid black;
-    min-height:250px;
+    min-height:500px;
 }
 
 .buttons {
@@ -87,21 +87,29 @@ label{
     margin-right: auto;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 .col-sm-12.text-center {
     margin-top: 5px;
 }
 
 #loginFormWrapper {
     margin-top:30px;
+}
+
+.page-header {
+    margin-top:20px;
+}
+
+.btn-sm {
+    
+}
+
+
+
+
+
+
+
+.nav-tabs.nav-justified>li>a {
+    font-size:13px;
+    padding: 5px;
 }

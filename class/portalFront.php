@@ -75,7 +75,7 @@
         $login = $this->dbo->real_escape_string($login);
         $pass = $this->dbo->real_escape_string($pass);
         //Wykonanie zapytania sprawdzającego poprawność danych
-        $query = "SELECT haslo,login FROM konta WHERE login='$login'";
+        $query = "SELECT haslo,login,iduzytkownika FROM konta WHERE login='$login'";
         if(!$result = $this->dbo->query($query)){
         //echo 'Wystąpił błąd: nieprawidłowe zapytanie...';
             return SERVER_ERROR;
@@ -94,7 +94,8 @@
             }
             else{
                 $nazwa = $row[1];
-                $_SESSION['zalogowany'] = new User($row[0], $nazwa);
+                $id = $row[2];
+                $_SESSION['zalogowany'] = new User($pass_db, $nazwa, $id);
                 return ACTION_OK;
             }
         }
@@ -114,70 +115,81 @@
             return $reg->registerUser();
         }
         function showMainMenu(){
-            if(isset($_SESSION['zalogowany'])){ss
+            if(isset($_SESSION['zalogowany'])){
                 $menu = new mainmenu();
-                return $menu->show();
+                return $menu->showMainMenu();
             }    
         }
+        function showAddIncomeForm(){
+            $addInc = new income($this->dbo);
+            return $addInc->showAddIncomeForm();
+        }
+        function addIncome(){
+            $addInc = new income($this->dbo);
+            return $addInc->addIncome();
+        }
+        function showAddExpenseForm(){
+            $addExp = new expense($this->dbo);
+            return $addExp->showAddExpenseForm();
+        }
+        function addExpense(){
+            $addExp = new expense($this->dbo);
+            return $addExp->addExpense();
+        }
+        function showUserSettings(){
+            $userSet = new settings($this->dbo);
+            return $userSet->showUserSettings();
+        }
+        function changeLogin(){
+            $userSet = new settings($this->dbo);
+            return $userSet->changeLogin();
+        }
+        function changePass(){
+            $userSet = new settings($this->dbo);
+            return $userSet->changePass();
+        }
+        function changeEmail(){
+            $userSet = new settings($this->dbo);
+            return $userSet->changeEmail();
+        }
+        function showOptions(){
+            $opt = new options($this->dbo);
+            return $opt->showOptions();
+        }
+        function addCatIncome(){
+            $opt = new income($this->dbo);
+            return $opt->addCatIncome();
+        }
+        function addCatExpense(){
+            $opt = new expense($this->dbo);
+            return $opt->addCatExpense();
+        }
+        function editCatIncome(){
+            $opt = new income($this->dbo);
+            return $opt->editCatIncome();
+        }
+        function editCatExpense(){
+            $opt = new expense($this->dbo);
+            return $opt->editCatExpense();
+        }
+        function delCatIncome(){
+            $opt = new income($this->dbo);
+            return $opt->delCatIncome();
+        }
+        function delCatExpense(){
+            $opt = new expense($this->dbo);
+            return $opt->delCatExpense();
+        }
+        function delLastCatIncome(){
+            $opt = new income($this->dbo);
+            return $opt->delLastCatIncome();
+        }
+        function delLastCatExpense(){
+            $opt = new expense($this->dbo);
+            return $opt->delLastCatExpense();
+        }
         
         
-        /*
-        function showSearchForm()
-        {
-            $autor = filter_input(INPUT_GET, 'autor', FILTER_SANITIZE_SPECIAL_CHARS);
-            $tytul = filter_input(INPUT_GET, 'tytul', FILTER_SANITIZE_SPECIAL_CHARS);
-            include 'templates/searchForm.php';
-        }
-        function showSearchResults()
-        {
-        //Określenie warunku dla autora
-        if(isset($_GET['autor']) && $_GET['autor'] != ''){
-        //Tu lub po przefiltrowaniu dodatkowa weryfikacja poprawności parametru
-            $autor = filter_input(INPUT_GET, 'autor',FILTER_SANITIZE_SPECIAL_CHARS);
-            $cond1 = " AND a.`Nazwa` LIKE '%$autor%' ";
-        }
-        else{
-            $cond1 = '';
-        }
-        //Określenie warunku dla tytułu
-        if(isset($_GET['tytul']) && $_GET['tytul'] != ''){
-        //Tu lub po przefiltrowaniu dodatkowa weryfikacja poprawności parametru
-            $tytul = filter_input(INPUT_GET, 'tytul',
-            FILTER_SANITIZE_SPECIAL_CHARS);
-            $cond2 = " AND k.`Tytul` LIKE '%$tytul%' ";
-        }
-        else{
-            $cond2 = '';
-        }
-        //Formowanie zapytania
-          $query= 'SELECT k.`Tytul`, GROUP_CONCAT(a.`Nazwa`) AS `Autor`,'
-            .'k.`ISBN`, w.`Nazwa` AS `Wydawnictwo`, k.`Cena`,'
-            .'k.`Id` AS `Id` '
-            .'FROM Ksiazki k JOIN Wydawnictwa w ON (k.WydawnictwoId = w.Id) JOIN KsiazkiAutorzy ka ON (ka.`KsiazkaId` = k.`Id`) '
-            .'JOIN Autorzy a ON (ka.`AutorId` = a.`Id`) '
-            .'WHERE 1=1  '.$cond1.$cond2.''
-            .'GROUP BY k.`Id` '
-            .'ORDER BY `Autor`, `Tytul`, `Wydawnictwo`';
-            
-        $query = 'SELECT k.`Tytul`, GROUP_CONCAT(a.`Nazwa`) AS `Autor`, '
-        . 'k.`ISBN`, w.`Nazwa` AS `Wydawnictwo`, k.`Cena`, '
-        . 'k.`Id` AS `Id` '
-        . 'FROM Ksiazki k JOIN Wydawnictwa w ON (k.WydawnictwoId = w.Id) '
-        . 'JOIN KsiazkiAutorzy ka ON (ka.`KsiazkaId` = k.`Id`) '
-        . 'JOIN Autorzy a ON (ka.`AutorId` = a.`Id`) WHERE 1=1 '
-        . $cond1.$cond2
-        . 'GROUP BY k.`Id` ORDER BY `Autor`, `Tytuł`, `Wydawnictwo`';
-        //Wykonanie zapytania i sprawdzenie wyników
-        $komunikat = false;
-        if(!$result = $this->dbo->query($query)){
-            $komunikat = 'Wyniki wyszukiwania nie są obecnie dostępne.';
-        } else if($result->num_rows < 1) {
-            $komunikat = 'Brak książek spełniających podane kryteria.';
-        }
-        //Wyświetlenie rezultatów wyszukiwania
-        include 'templates/searchResults.php';
-        }
-*/
-        //Tutaj pozostałe metody klasy
     }
+      
 ?>

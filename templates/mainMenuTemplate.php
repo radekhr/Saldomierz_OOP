@@ -14,15 +14,15 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-      <b class="navbar-text">Witaj, <?=$this->zalogowany->nazwa?>!</b>
+      <b class="navbar-text">Witaj, <?=$this->zalogowany->nazwa?>. Twoje ID: <?=$this->zalogowany->id?></b>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
      
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="index.php?action=income">Dodaj przychód <span class="sr-only">(current)</span></a></li>
-        <li><a href="wydatek.php">Dodaj wydatek<span class="sr-only">(current)</span></a></li>
-        <li><a href="bilans.php">Bilans<span class="sr-only">(current)</span></a></li>
-        <li><a href="opcje.php">Opcje wpisów<span class="sr-only">(current)</span></a></li>
-        <li><a href="ustawienia.php">Ustawienia<span class="sr-only">(current)</span></a></li>
+        <li><a href="index.php?action=showAddIncomeForm">Dodaj przychód <span class="sr-only">(current)</span></a></li>
+        <li><a href="index.php?action=showAddExpenseForm">Dodaj wydatek<span class="sr-only">(current)</span></a></li>
+        <li><a href="index.php?action=showBalance">Bilans<span class="sr-only">(current)</span></a></li>
+        <li><a href="index.php?action=showOptions">Opcje wpisów<span class="sr-only">(current)</span></a></li>
+        <li><a href="index.php?action=showUserSettings">Ustawienia<span class="sr-only">(current)</span></a></li>
         <li><a href="index.php?action=logout"><span class="glyphicon glyphicon-log-out"></span><span class="sr-only">(current)</span></a></li>
       </ul>
     </div><!-- /.navbar-collapse -->

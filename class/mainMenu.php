@@ -8,15 +8,13 @@ class mainMenu
             $this->zalogowany = $this->getActualUser();
         }
     function getActualUser(){
-            if(isset($_SESSION['zalogowany'])){
+            if(isset($_SESSION['zalogowany']))
                 return $_SESSION['zalogowany'];
-            }
-            else{
+            else
                 return null;
-            }
         }
     
-    function show(){
+    function showMainMenu(){
         include 'templates/mainMenuTemplate.php';
     }
 }
