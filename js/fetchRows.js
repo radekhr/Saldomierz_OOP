@@ -351,8 +351,9 @@
     //MAIN
     $( ".target" ).change(chosenTarget);
         chosenTarget(); 
- $('#tabPrzychody').editable({
-      container: 'body',
+
+     $('#tabPrzychody').editable({
+      container: 'jumbotron',
       selector: 'td.data',
       url: "fetch/updIncome.php",
       title: 'Wpisz nową datę w formacie YYYY-MM-DD',
@@ -426,5 +427,24 @@
       
     });
 
+     $('#tabPrzychody').editable({
+          container: 'body',
+          selector: 'td.wynagrodzenie',
+          url: "fetch/updIncome.php",
+          title: 'Wybierz nowe wynagrodzenie',
+          dataType: 'json',
+          type: "POST",
+          source: [{value: "Sprzedaz", text: "Sprzedaż"},{value: "odsetki", text: "Odsetki bankowe"},{value: "Inne", text: "Inne"}]
+
+    });
+    $('#tabWydatki').editable({
+          container: 'body',
+          selector: 'td.kategoria',
+          url: "fetch/updExpense.php",
+          title: 'Wybierz nowa kategorię',
+          dataType: 'json',
+          type: "POST",
+        source: [{value: "Ksiazki", text: "Ksiazki"},{value: "Jedzenie", text: "Jedzenie"},{value: "Mieszkanie", text: "Mieszkanie"},{value: "Komunikacja", text: "Komunikacja"},{value: "Zdrowie", text: "Zdrowie"},{value: "Ubrania", text: "Ubrania"},]
+    });
 
 

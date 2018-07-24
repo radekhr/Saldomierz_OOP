@@ -1,5 +1,5 @@
 <?php if(!$this) die();?>
-<?php $iduser = $_SESSION['zalogowany']->id; 
+      <?php $iduser = $_SESSION['zalogowany']->id; 
       $query1 = "SELECT nazwaKategorii FROM kategorie_przychody_uzytkownika WHERE idUzytkownika='$iduser'";
       $query2 = "SELECT nazwaKategorii FROM kategorie_wydatki_uzytkownika WHERE idUzytkownika='$iduser'";
       if($katPrzychody = $this->dbo->query($query1)){$katPrzychod = mysqli_fetch_assoc($katPrzychody);} 
@@ -73,4 +73,4 @@
     </div>
     
    <script type="text/javascript" src="js/fetchRows.js"></script>
-   <script type="text/javascript" src="js/editable.js"></script>
+   

@@ -5,7 +5,7 @@
     session_start();
     try
     {
-        $portal = new PortalFront("localhost", "radekhr_admin", "Paviliondv66@", "radekhr_saldomierz");
+        $portal = new PortalFront("localhost", "root", "", "saldomierz");
         $action = 'showWelcomeContent';
         if (isset($_GET['action'])) 
         {
