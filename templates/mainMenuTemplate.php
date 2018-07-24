@@ -15,7 +15,7 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
       <b class="navbar-text">Witaj, <?=$this->zalogowany->nazwa?>. Twoje ID: <?=$this->zalogowany->id?></b>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
      
       <ul class="nav navbar-nav navbar-right">
         <li><a href="index.php?action=showAddIncomeForm">Dodaj przychód <span class="sr-only">(current)</span></a></li>

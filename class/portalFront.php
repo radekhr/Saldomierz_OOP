@@ -188,6 +188,10 @@
             $opt = new expense($this->dbo);
             return $opt->delLastCatExpense();
         }
+        function showBalance(){
+            $bal = new balance($this->dbo);
+            return $bal->showBalance();
+        }
         
         
     }

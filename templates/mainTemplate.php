@@ -9,9 +9,16 @@
 <meta name="viewport" content="width = device-width, initial-scale = 1">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 <title>Saldomierz</title>
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+<!--BS3-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!--XEDITABLE-->
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <link rel="stylesheet" href="css/style.css" type="text/css"/>
+
 
 </head>
 <body> 
@@ -48,6 +55,10 @@
                 case 'showOptions':
                     $portal->showMainMenu();
                     $portal->showOptions();
+                break;
+                case 'showBalance':
+                    $portal->showMainMenu();
+                    $portal->showBalance();
                 break;
                 default:
                     include 'welcomeTemplate.php';

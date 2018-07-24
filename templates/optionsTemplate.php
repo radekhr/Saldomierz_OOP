@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-success">
-                        <div class="panel-heading" style="text-align: center;"><b>PRZYCHODY</b></div>
+                        <div class="panel-heading">PRZYCHODY</div>
                      </div>
                     <ul class="nav nav-tabs nav-justified">
                         <li class="active"><a href="#tab1" data-toggle="tab">Dodaj kategorię</a></li>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="panel panel-danger">
-                        <div class="panel-heading" style="text-align: center;"><b>WYDATKI</b></div>
+                        <div class="panel-heading">WYDATKI</div>
                      </div>
                     <ul class="nav nav-tabs nav-justified">
                         <li class="active"><a href="#tab5" data-toggle="tab">Dodaj kategorię</a></li>
@@ -152,10 +152,10 @@
                            <form role="form" method="post" action="index.php?action=delLastCatExpense">
                                <?php foreach($ostWpisWydatek as $ostWpisWydatek_fetch): ?>
                                 <div class="input-group" style="margin-left:0px; margin-top:10px;">
-                                    <label>Data wpisu: </label><input value="<?= $ostWpisPrzychod_fetch['data']?>"disabled>
-                                    <br/><br/><label>Kwota: </label><input value="<?=$ostWpisPrzychod_fetch['kwota']?>"disabled>
-                                     <br/><br/><label>Kategoria: </label><input value="<?=$ostWpisPrzychod_fetch['kategoria']?>"disabled>
-                                     <br/><br/><label>Komentarz: </label><input  value="<?=$ostWpisPrzychod_fetch['komentarz']?>"disabled>        
+                                    <label>Data wpisu: </label><input value="<?= $ostWpisWydatek_fetch['data']?>"disabled>
+                                    <br/><br/><label>Kwota: </label><input value="<?=$ostWpisWydatek_fetch['kwota']?>"disabled>
+                                     <br/><br/><label>Kategoria: </label><input value="<?=$ostWpisWydatek_fetch['kategoria']?>"disabled>
+                                     <br/><br/><label>Komentarz: </label><input  value="<?=$ostWpisWydatek_fetch['komentarz']?>"disabled>        
                                </div>
                                <?php endforeach;?>
                                 <br/><div class="col-lg-12 text-center">                          

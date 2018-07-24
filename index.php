@@ -5,7 +5,7 @@
     session_start();
     try
     {
-        $portal = new PortalFront("localhost", "root", "", "saldomierz");
+        $portal = new PortalFront("localhost", "radekhr_admin", "Paviliondv66@", "radekhr_saldomierz");
         $action = 'showWelcomeContent';
         if (isset($_GET['action'])) 
         {
@@ -290,7 +290,10 @@
                         $portal->setMessage('Błąd serwera!');
                 }
                 header('Location:index.php?action=showOptions');
-            break;     
+            break;   
+            case 'balance':
+                $portal ->showBalance();
+            break;
             default:
             include 'templates/mainTemplate.php';
         }
