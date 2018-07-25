@@ -353,7 +353,7 @@
         chosenTarget(); 
 
      $('#tabPrzychody').editable({
-      container: 'jumbotron',
+      container: 'body',
       selector: 'td.data',
       url: "fetch/updIncome.php",
       title: 'Wpisz nową datę w formacie YYYY-MM-DD',

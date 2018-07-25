@@ -61,11 +61,11 @@ class Registration
         $emptyFieldDetected = true;
     }
     }
-    //Sprawdzenie, czy wykryto puste pola
+
     if($emptyFieldDetected){
         return FORM_DATA_MISSING;
     }
-    //Sprawdzenie, czy podany e-mail jest już w bazie
+
     $query = "SELECT * FROM konta WHERE email='".$fieldsFromForm['email']."' OR login='".$fieldsFromForm['login']."'";
     if($result = $this->dbo->query($query)){
         $rows = $result->num_rows;
@@ -73,37 +73,34 @@ class Registration
             return USER_NAME_ALREADY_EXISTS;
         }
     }
-    //Sprawdzenie zgodności hasła z obu pól
+
     if($fieldsFromForm['haslo'] != $fieldsFromForm['haslo2']){
         return PASSWORDS_DO_NOT_MATCH;
     }
     unset($fieldsFromForm['haslo2']);
     unset($this->fields['haslo2']);
-    //Zakodowanie hasła
     $fieldsFromForm['haslo'] = crypt($fieldsFromForm['haslo']);
-    //Przygotowanie ciągów nazw pól i wartości pól dla zapytania SQL
+
     $fieldsNames = '`'.implode('`,`', array_keys($this->fields)).'`';
-    $fieldsVals = '\''.implode('\',\'', $fieldsFromForm).'\''; //('xxx')
-    //Formowanie i wykonanie zapytania
+    $fieldsVals = '\''.implode('\',\'', $fieldsFromForm).'\''; 
+
     $query = "INSERT INTO konta VALUES ('NULL',$fieldsVals)";
-    if($this->dbo->query($query))
-    {
+    if($this->dbo->query($query)){
         $query = "SELECT iduzytkownika FROM konta where login='".$fieldsFromForm['login']."'";
         $idUser = $this->dbo->query($query)->fetch_object()->iduzytkownika;       
-        $this->pullCategories($idUser);
-        
-    }    
-    else
-        return ACTION_FAILED;
+        $this->pullCategories($idUser); 
+        return ACTION_OK;
+    }  
     }
+    
     function pullCategories($idUser){
-        $query1 = "INSERT INTO kategorie_wydatki_uzytkownika(nazwaKategorii) SELECT kategorie_wydatki_domyslne.nazwaKategorii FROM kategorie_wydatki_domyslne";
-        $query2 = "INSERT INTO kategorie_przychody_uzytkownika(nazwaKategorii) SELECT kategorie_przychody_domyslne.nazwaKategorii FROM kategorie_przychody_domyslne";
-        if($this->dbo->query($query1) && $this->dbo->query($query2)){
-            $query1="UPDATE kategorie_przychody_uzytkownika SET idUzytkownika = '$idUser' WHERE idUzytkownika = '0'";
-            $query2="UPDATE kategorie_wydatki_uzytkownika SET idUzytkownika = '$idUser' WHERE idUzytkownika = '0'";
-            $this->dbo->query($query1);
-            $this->dbo->query($query2);
-        }
+        $query = "INSERT INTO kategorie_wydatki_uzytkownika(nazwaKategorii) SELECT kategorie_wydatki_domyslne.nazwaKategorii FROM kategorie_wydatki_domyslne";
+            $this->dbo->query($query);
+        $query = "INSERT INTO kategorie_przychody_uzytkownika(nazwaKategorii) SELECT kategorie_przychody_domyslne.nazwaKategorii FROM kategorie_przychody_domyslne";
+            $this->dbo->query($query);
+        $query="UPDATE kategorie_przychody_uzytkownika SET idUzytkownika = '$idUser' WHERE idUzytkownika = '0'";
+            $this->dbo->query($query);
+        $query="UPDATE kategorie_wydatki_uzytkownika SET idUzytkownika = '$idUser' WHERE idUzytkownika = '0'";
+            $this->dbo->query($query);
     }
 }

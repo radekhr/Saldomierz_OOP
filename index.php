@@ -74,9 +74,12 @@
                         $portal->setMessage('Podany adres e-mail lub login jest już zarejestrowany!');
                     break;
                     case ACTION_FAILED:
+                        $portal->setMessage('Akcja nieudana. Spróbuj się zarejestrować za kilka minut');
+                    break;
                     case SERVER_ERROR:
                     default:
                         $portal->setMessage('Błąd serwera!');
+                     break;                        
                 }
                 header('Location:index.php?action=showRegistrationForm');
             break;
